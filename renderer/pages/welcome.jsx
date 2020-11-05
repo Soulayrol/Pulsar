@@ -35,12 +35,12 @@ export default class Welcome extends React.Component {
           selected: false,
           exe: {
             houdini: {
-              path: '',
-              default: 'C:/Program Files/Side Effects Software/Houdini X.Y.ZZZ/bin/houdinifx.exe'
+              path: 'C:/Houdini18/bin/houdinifx.exe',
+              default: 'C:/Houdini18/bin/houdinifx.exe ARTFX CONFIG 2021'
             },
             hython: {
-              path: '',
-              default: 'C:/Program Files/Side Effects Software/Houdini X.Y.ZZZ/bin/hython.exe'
+              path: 'C:/Houdini18/bin/hython.exe',
+              default: 'C:/Houdini18/bin/hython.exe ARTFX CONFIG 2021'
             }
           }
         },
@@ -48,12 +48,12 @@ export default class Welcome extends React.Component {
           selected: false,
           exe: {
             maya: {
-              path: '',
-              default: 'C:/Program Files/Autodesk/MayaXXXX/bin/maya.exe'
+              path: 'C:/Maya2019/bin/maya.exe',
+              default: 'C:/Maya2019/bin/maya.exe ARTFX CONFIG 2021'
             },
             mayapy: {
-              path: '',
-              default: 'C:/Program Files/Autodesk/Maya2018/bin/mayapy.exe'
+              path: 'C:/Maya2019/bin/mayapy.exe',
+              default: 'C:/Maya2019/bin/mayapy.exe ARTFX CONFIG 2021'
             }
           }
         },
@@ -61,8 +61,8 @@ export default class Welcome extends React.Component {
           selected: false,
           exe: {
             nuke: {
-              path: '',
-              default: 'C:/Program Files/NukeXX.YvZ/bin/NukeXX.Y.exe'
+              path: 'C:/Nuke12.2v2/bin/Nuke12.2.exe',
+              default: 'C:/Nuke12.2v2/bin/Nuke12.2.exe ARTFX CONFIG 2021'
             }
           }
         }
@@ -134,37 +134,37 @@ export default class Welcome extends React.Component {
         path: path,
         asset: {
           scene: {
-            path: '{project}/ASSET/{asset_type}/scenes/{task}/{state}_{version}/{file}',
+            path: '{project}/03_WORK_PIPE/01_ASSET_3D/{asset_type}/{asset_name}/{dimension}/scenes/{task}/{subtask}/{state}_{version}/{file}',
             valid: true
           },
           render: {
-            path: '{project}/ASSET/{asset_type}/render/{version}/{file}',
+            path: '{project}/03_WORK_PIPE/01_ASSET_3D/{group}/{name}/{dimension}/render/{task}/{subtask}/{state}_{version}/{file}',
             valid: true
           },
           cache: {
-            path: '{project}/ASSET/{asset_type}/cache/{file}',
+            path: '{project}/03_WORK_PIPE/01_ASSET_3D/{group}/{name}/{dimension}/caches/{task}/{subtask}/{state}_{version}/{file}',
             valid: true
           },
           texture: {
-            path: '{project}/ASSET/{asset_type}/images/{version}/{file}',
+            path: '{project}/03_WORK_PIPE/01_ASSET_3D/{group}/{name}/{dimension}/images/{state}_{version}/{file}',
             valid: true
           }
         },
         shot: {
           scene: {
-            path: '{project}/SHOT/scenes/{sequence}/{shot}/{task}/{state}_{version}/{file}',
+            path: '{project}/03_WORK_PIPE/02_SHOT/{dimension}/scenes/{sequence}/{shot}/{task}/{subtask}/{state}_{version}/{file}',
             valid: true
           },
           render: {
-            path: '{project}/SHOT/render/{sequence}/{shot}/{version}/{file}',
+            path: '{project}/03_WORK_PIPE/02_SHOT/{dimension}/render/{group}/{name}/{task}/{subtask}/{state}_{version}/{file}',
             valid: true
           },
           cache: {
-            path: '{project}/SHOT/caches/{sequence}/{shot}/{file}',
+            path: '{project}/03_WORK_PIPE/02_SHOT/{dimension}/caches/{group}/{name}/{task}/{subtask}/{state}_{version}/{file}',
             valid: true
           },
           texture: {
-            path: '{project}/SHOT/images/{sequence}/{shot}/{version}/{file}',
+            path: '{project}/03_WORK_PIPE/02_SHOT/{dimension}/images/{group}/{name}/{state}_{version}/{file}',
             valid: true
           }
         }
@@ -259,7 +259,13 @@ export default class Welcome extends React.Component {
       theme: theme,
       softwares: softwares
     }
-    console.log(data)
+    console.log(data.projects[0])
+    console.log(process.env.ROOT_PIPE)
+    // Setup ROOT_PIPE variable
+    if (process.env.ROOT_PIPE === undefined) {
+      // process.env.ROOT_PATH = data.projects
+      console.log('SETUP ROOT_PIPE variable')
+    }
     ipcRenderer.send('setConfig', data)
     this.setState({ finished: true })
   }
