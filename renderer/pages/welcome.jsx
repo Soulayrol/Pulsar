@@ -128,7 +128,11 @@ export default class Welcome extends React.Component {
   addProject () {
     const projects = this.state.projects
     const name = this.state.newProjectName
-    const path = this.state.newProjectPath
+    var path = this.state.newProjectPath
+    var pathLib = require('path')
+    if (path.endsWith(name) === false) {
+      path = pathLib.join(path, name)
+    }
     if (name !== '' && path !== '') {
       const data = {
         path: path,
@@ -259,13 +263,7 @@ export default class Welcome extends React.Component {
       theme: theme,
       softwares: softwares
     }
-    console.log(data.projects[0])
-    console.log(process.env.ROOT_PIPE)
-    // Setup ROOT_PIPE variable
-    if (process.env.ROOT_PIPE === undefined) {
-      // process.env.ROOT_PATH = data.projects
-      console.log('SETUP ROOT_PIPE variable')
-    }
+    console.log(data.projects)
     ipcRenderer.send('setConfig', data)
     this.setState({ finished: true })
   }

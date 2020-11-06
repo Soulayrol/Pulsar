@@ -3,6 +3,8 @@ import { join, sep } from 'path'
 import fs from 'fs'
 import ncp from 'ncp'
 
+const { exec } = require('child_process')
+
 /**
 * Manages the config file
 */
@@ -213,11 +215,16 @@ class Config {
    * @param {function} cb   A callback function
    */
   setConfig (data, cb) {
+    var path = require('path')
     const keys = Object.keys(data)
     for (let i = 0; i < keys.length; i++) {
       this._config[keys[i]] = data[keys[i]]
     }
     const jsonContent = JSON.stringify(this._config, null, 2)
+    // Setup ROOT_PIPE variable
+    console.log('Setup ROOT_PIPE env to ' + path.dirname(Object.values(data.projects)[0].path))
+    exec('export ROOT_PIPE=' + path.dirname(Object.values(data.projects)[0].path))
+    exec('setx ROOT_PIPE "D:/SynologyDrive"')
 
     fs.writeFile(this._filePath, jsonContent, 'utf8', function (err) {
       if (err) {
