@@ -16,6 +16,9 @@ import Switch from '../components/Switch'
 
 import '../styles/manager.sass'
 
+
+var path = require('path')
+const { exec } = require('child_process')
 const ipcRenderer = electron.ipcRenderer || false
 
 export default class Manager extends React.Component {
@@ -155,6 +158,11 @@ export default class Manager extends React.Component {
       ipcRenderer.on('project', (event, data) => {
         console.log('received DATA')
         console.log(data)
+        // Setup ROOT_PIPE variable
+        var path_dir = path.dirname(data.groups.project).replace(/\\/g, '/')
+        console.log(`Setup ROOT_PIPE env to ${path_dir}`)
+        exec(`export ROOT_PIPE="${path_dir}"`)
+        exec(`setx ROOT_PIPE "${path_dir}"`)
         this.setState({ project: data })
       })
 

@@ -1,5 +1,5 @@
 import { homedir } from 'os'
-import { join, sep } from 'path'
+import { join, sep, dirname } from 'path'
 import fs from 'fs'
 import ncp from 'ncp'
 
@@ -222,9 +222,10 @@ class Config {
     }
     const jsonContent = JSON.stringify(this._config, null, 2)
     // Setup ROOT_PIPE variable
-    console.log('Setup ROOT_PIPE env to ' + path.dirname(Object.values(data.projects)[0].path))
-    exec('export ROOT_PIPE=' + path.dirname(Object.values(data.projects)[0].path))
-    exec('setx ROOT_PIPE "D:/SynologyDrive"')
+    var path_dir = dirname(Object.values(data.projects)[0].path).replace(/\\/g, '/')
+    console.log(`Setup ROOT_PIPE env to ${path_dir}`)
+    exec(`export ROOT_PIPE="${path_dir}"`)
+    exec(`setx ROOT_PIPE "${path_dir}"`)
 
     fs.writeFile(this._filePath, jsonContent, 'utf8', function (err) {
       if (err) {

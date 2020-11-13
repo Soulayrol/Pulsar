@@ -2,8 +2,8 @@
   "private": true,
   "name": "pulsar",
   "description": "Pulsar | A Pipeline Tool",
-  "version": "0.0.4",
-  "author": "Lee Geertsen <lgeertsen@artfx.fr>",
+  "version": "0.0.5",
+  "author": "ArtFx ft. Lee Geertsen <lgeertsen@artfx.fr>",
   "main": "app/background.js",
   "scripts": {
     "dev": "nextron",

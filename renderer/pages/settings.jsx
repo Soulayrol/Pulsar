@@ -198,7 +198,12 @@ export default class Settings extends React.Component {
     const projects = this.state.projects
 
     const name = this.state.newProjectName
-    const path = this.state.newProjectPath
+    var path = this.state.newProjectPath
+    var pathLib = require('path')
+    if (path.endsWith(name) === false) {
+      path = pathLib.join(path, name)
+    }
+
     if (name === '' || path === '') {
       return
     }
@@ -206,37 +211,37 @@ export default class Settings extends React.Component {
       path: path,
       asset: {
         scene: {
-          path: '{project}/ASSET/{asset_type}/scenes/{task}/{state}_{version}/{file}',
+          path: '{project}/03_WORK_PIPE/01_ASSET_3D/{asset_type}/{asset_name}/{dimension}/scenes/{task}/{subtask}/{state}_{version}/{file}',
           valid: true
         },
         render: {
-          path: '{project}/ASSET/{asset_type}/render/{version}/{file}',
+          path: '{project}/03_WORK_PIPE/01_ASSET_3D/{group}/{name}/{dimension}/render/{task}/{subtask}/{state}_{version}/{file}',
           valid: true
         },
         cache: {
-          path: '{project}/ASSET/{asset_type}/cache/{file}',
+          path: '{project}/03_WORK_PIPE/01_ASSET_3D/{group}/{name}/{dimension}/caches/{task}/{subtask}/{state}_{version}/{file}',
           valid: true
         },
         texture: {
-          path: '{project}/ASSET/{asset_type}/images/{version}/{file}',
+          path: '{project}/03_WORK_PIPE/01_ASSET_3D/{group}/{name}/{dimension}/images/{state}_{version}/{file}',
           valid: true
         }
       },
       shot: {
         scene: {
-          path: '{project}/SHOT/scenes/{sequence}/{shot}/{task}/{state}_{version}/{file}',
+          path: '{project}/03_WORK_PIPE/02_SHOT/{dimension}/scenes/{sequence}/{shot}/{task}/{subtask}/{state}_{version}/{file}',
           valid: true
         },
         render: {
-          path: '{project}/SHOT/render/{sequence}/{shot}/{version}/{file}',
+          path: '{project}/03_WORK_PIPE/02_SHOT/{dimension}/render/{group}/{name}/{task}/{subtask}/{state}_{version}/{file}',
           valid: true
         },
         cache: {
-          path: '{project}/SHOT/caches/{sequence}/{shot}/{file}',
+          path: '{project}/03_WORK_PIPE/02_SHOT/{dimension}/caches/{group}/{name}/{task}/{subtask}/{state}_{version}/{file}',
           valid: true
         },
         texture: {
-          path: '{project}/SHOT/images/{sequence}/{shot}/{version}/{file}',
+          path: '{project}/03_WORK_PIPE/02_SHOT/{dimension}/images/{group}/{name}/{state}_{version}/{file}',
           valid: true
         }
       }
@@ -375,7 +380,7 @@ export default class Settings extends React.Component {
         <div className={'settings-title'}>
           <h1 className="display-4">Projects</h1>
           {this.state.needToSave === true && this.state.projectPathsValid === true
-            ? <div className={`button ${this.state.theme}`} onClick={e => this.saveChanges('project')}>SAVE CHANGES</div>
+            ? <div className={`button ${this.state.theme} bg-${this.state.primaryColor}`} onClick={e => this.saveChanges('project')}>SAVE CHANGES</div>
             : ''
           }
         </div>
